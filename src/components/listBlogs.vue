@@ -43,8 +43,15 @@ export default {
       }
     },
     created() {
-        this.$http.get('http://jsonplaceholder.typicode.com/posts').then(function(data){
-            this.blogs = data.body.slice(0,10);
+        this.$http.get('https://vue-playlist-bb7f8.firebaseio.com/posts.json').then(function(data){
+            return data.json();
+        }).then(function(data){
+            var blogsArr = [];
+            for(let key in data) {
+              data[key].id = key;
+              blogsArr.push(data[key]);
+            }
+            this.blogs = blogsArr;
         });
     },
     mixins: [searchMixin]

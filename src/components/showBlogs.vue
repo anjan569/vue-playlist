@@ -5,7 +5,25 @@
         <div v-if="blog" class="single-blog">
             <router-link to="/">Back</router-link>
             <h2 v-rainbow>{{ blog.title}}</h2>
-            <article>{{ blog.body }}</article>
+            <article>{{ blog.content }}</article>
+            <p>Categories: </p>
+            <div id="checkboxes">
+              <label >Ninjas</label>
+              <input type="checkbox" disabled="true" value="ninjas" v-model="blog.categories">
+              <label >widgets</label>
+              <input type="checkbox" disabled="true" value="widgets" v-model="blog.categories">
+              <label >Mario</label>
+              <input type="checkbox" disabled="true" value="mario" v-model="blog.categories">
+              <label >Cheese</label>
+              <input type="checkbox" disabled="true" value="cheese" v-model="blog.categories">
+            </div>
+            <p>Autor: </p>
+            <div id="selectBox">
+
+              <select v-model="blog.author" disabled="true">
+                <option v-for="author in authors"> {{author.name}}</option>
+              </select>
+            </div>
         </div>
     </div>
 </template>
@@ -17,7 +35,12 @@ export default {
         return {
             id: this.$route.params.id,
             blog: {},
-            search: ''
+            search: '',
+            authors: [
+              {id: 1, name:'The Net Ninja'},
+              {id: 2, name:'The Angular Avenger'},
+              {id: 3, name:'The vue Vinidicator'},
+            ],
         }
     },
     methods: {
@@ -38,10 +61,12 @@ export default {
       }
     },
     created()  {
-        this.$http.get('http://jsonplaceholder.typicode.com/posts/'+this.id).then(function(data){
-            this.blog = data.body;
-            console.log(this.blog);
-        });
+        this.$http.get('https://vue-playlist-bb7f8.firebaseio.com/posts/'+this.id+'.json').then(function(data){
+            return data.json();
+        }).then(function(data) {
+          this.blog = data;
+          console.log(this.blog);
+        })
     },
     mixins: [searchMixin]
 }

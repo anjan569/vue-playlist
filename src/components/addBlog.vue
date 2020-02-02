@@ -15,16 +15,16 @@
         <input type="checkbox" value="mario" v-model="blog.categories">
         <label >Cheese</label>
         <input type="checkbox" value="cheese" v-model="blog.categories">
-        <div id="selectBox">
-          <label>Authors:</label>
-          <select v-model="blog.author">
-            <option v-for="author in authors"> {{author.name}}</option>
-          </select>
-        </div>
-        <hr />
-        <button v-on:click.prevent="post">Add Blog</button>
-        <router-link to="/">Cancel</router-link>
       </div>
+      <div id="selectBox">
+        <label>Authors:</label>
+        <select v-model="blog.author">
+          <option v-for="author in authors"> {{author.name}}</option>
+        </select>
+      </div>
+      <hr />
+      <button v-on:click.prevent="post">Add Blog</button>
+      <router-link to="/">Cancel</router-link>
       <div v-if="submitted">
         Thanks for adding the post
       </div>
